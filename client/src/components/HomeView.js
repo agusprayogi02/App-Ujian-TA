@@ -1,6 +1,6 @@
 import React from "react";
-import Util from "../lib/Util"
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import Util from "../lib/Util";
 
 export default class HomeView extends React.Component {
 
@@ -22,9 +22,9 @@ export default class HomeView extends React.Component {
 
     extractHeaders(records) {
         let headers = [];
-        if(records.length > 0) {
+        if (records.length > 0) {
             for (const [key, value] of Object.entries(records[0])) {
-                headers.push(key);
+                if (value != null) headers.push(key);
             }
         }
         return headers;
@@ -71,25 +71,25 @@ export default class HomeView extends React.Component {
             padding: "0 10px 10px 10px",
             overflow: "scroll",
             border: "1px solid black"
-        } ;
+        };
         let self = this;
         return (
             <div>
                 <h3>Daftar Ujian Terjadwal</h3>
                 <div style={tableContainerStyle}>
-                    <table className="table table-striped" style={{marginTop: 20}}>
+                    <table className="table table-striped" style={{ marginTop: 20 }}>
                         <thead>
-                        <tr>
-                            {this.state.headers.map(function (header, index) {
-                                return <th>{Util.prettifyFieldName(header)}</th>;
-                            })}
-                            <th>Aksi</th>
-                        </tr>
+                            <tr>
+                                {this.state.headers.map(function (header, index) {
+                                    return <th>{Util.prettifyFieldName(header)}</th>;
+                                })}
+                                <th>Aksi</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        {this.state.records.map(function (record, index) {
-                            return <TableRowView record={record} deleteAction={() => {self.handleDeleteLinkClick(record._id)}}/>
-                        })}
+                            {this.state.records.map(function (record, index) {
+                                return <TableRowView record={record} deleteAction={() => { self.handleDeleteLinkClick(record._id) }} />
+                            })}
                         </tbody>
                     </table>
                 </div>
@@ -110,7 +110,7 @@ class TableRowView extends React.Component {
     extractFields(record) {
         let fields = []
         for (const [key, value] of Object.entries(record)) {
-            fields.push(key);
+            if (value != null) fields.push(key);
         }
         return fields
     }
@@ -125,9 +125,9 @@ class TableRowView extends React.Component {
                 <td>
                     <Link className="btn btn-link" to={`/edit/${this.props.record._id}`}>Edit</Link> |
                     <button className="btn btn-link"
-                            onClick={() => {
-                                this.props.deleteAction(this.props.record._id);
-                            }}
+                        onClick={() => {
+                            this.props.deleteAction(this.props.record._id);
+                        }}
                     >
                         Delete
                     </button>

@@ -51,10 +51,7 @@ class UjianTerjadwalModel {
     }
 
     deleteOneById(id, callback) {
-        // MongoDB Database Object
         let db = this.getDb();
-        // Query
-        // .. lengkapi logika kode dengan query yang sesuai di sini ..
         return db.collection(this.collectionName).deleteOne({ _id: ObjectId(id) }, callback);
     }
 }
