@@ -23,6 +23,7 @@ recordRoutes.route("/record/:id").get(function (req, res) {
     console.log("/record/:id")
     model.findOneById(req.params.id, function (err, result) {
         if (err) throw err;
+        console.log(result);
         res.json(result);
     });
 });
@@ -40,8 +41,9 @@ recordRoutes.route("/record/add").post(function (req, response) {
 // Mengubah data tertentu berdasarkan Object ID.
 recordRoutes.route("/update/:id").post(function (req, response) {
     console.log("/update/:id")
-    let updatedObj = Util.reqToObj(req);
-    model.edit(updatedObj._id, updatedObj, function (err, res) {
+    let updatedObj = Util.reqToObjNotId(req);
+    console.log(updatedObj, req.params.id);
+    model.edit(req.params.id, updatedObj, function (err, res) {
         if (err) throw err;
         console.log("1 document updated");
         response.json(res);
@@ -51,7 +53,7 @@ recordRoutes.route("/update/:id").post(function (req, response) {
 // Menghapus data tertentu berdasarkan object Id
 recordRoutes.route("/:id").delete((req, response) => {
     console.log("/:id")
-    model.deleteOneById(req.params.id,  function (err, obj) {
+    model.deleteOneById(req.params.id, function (err, obj) {
         if (err) throw err;
         console.log("1 document deleted");
         response.json(obj);
